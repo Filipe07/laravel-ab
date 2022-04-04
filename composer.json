@@ -1,0 +1,68 @@
+{
+    "name": "filipe07/laravel-ab",
+    "description": "Laravel A/B experiment testing tool",
+    "keywords": [
+        "filipe07",
+        "mfjordvald",
+        "ben182",
+        "php",
+        "laravel",
+        "laravel-package",
+        "laravel-5-package",
+        "ab-testing"
+    ],
+    "homepage": "https://github.com/filipe07/laravel-ab",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Filipe Gonçalves",
+            "email": "filipeandre07@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Mário Rocha",
+            "email": "marioplusrocha@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2 | ^8.0",
+        "illuminate/support": "^7.0 | ^8.0",
+        "jaybizzle/crawler-detect": "^1.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench": "3.9.* | ^6.0",
+        "phpunit/phpunit": "^8.0 | ^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AbTesting\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AbTesting\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html build"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AbTesting\\AbTestingServiceProvider"
+            ],
+            "aliases": {
+                "AbTesting": "AbTesting\\AbTestingFacade"
+            }
+        }
+    }
+}

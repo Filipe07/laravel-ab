@@ -1,0 +1,35 @@
+language: php
+
+php:
+  - 7.2
+  - 7.3
+  - 8.0
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+    - ILLUMINATE_VERSION=5.8.* TESTBENCH=3.8.* PHPUNIT_VERSION=~8.0 COVERAGE=true
+    - ILLUMINATE_VERSION=6.* TESTBENCH=4.* PHPUNIT_VERSION=~8.0 COVERAGE=true
+    - ILLUMINATE_VERSION=7.* TESTBENCH=5.* PHPUNIT_VERSION=~9.0 COVERAGE=true
+    - ILLUMINATE_VERSION=8.* TESTBENCH=6.* PHPUNIT_VERSION=~9.0 COVERAGE=true
+
+matrix:
+    fast_finish: true
+
+before_install:
+    - travis_retry composer self-update
+    - composer require "illuminate/support:${ILLUMINATE_VERSION}" --no-update --prefer-dist
+    - composer require "orchestra/testbench:${TESTBENCH}" --no-update --prefer-dist
+    - composer require "phpunit/phpunit:${PHPUNIT_VERSION}" --no-update --prefer-dist
+
+install: travis_retry composer install --no-interaction --prefer-dist
+
+script:
+    - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+    - sh -c "if [ ! -z ${COVERAGE+x} ]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi"
